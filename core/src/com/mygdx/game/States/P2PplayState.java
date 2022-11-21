@@ -29,7 +29,10 @@ public class P2PplayState extends State {
 
     @Override
     protected void handleInput() {
-
+        if(Gdx.input.justTouched()){
+            gam.set(new ResumeState(gam));
+            dispose();
+        }
     }
 
     @Override
@@ -53,6 +56,7 @@ public class P2PplayState extends State {
 
     @Override
     public void dispose() {
-
+        health_bar1.dispose();
+        health_bar2.dispose();
     }
 }
