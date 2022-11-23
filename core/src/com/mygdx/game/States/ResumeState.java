@@ -21,7 +21,7 @@ public class ResumeState extends State{
 
     public ResumeState(GameStateManager gam) {
         super(gam);
-        background=new Texture("pauseScene.jpg");
+        background=new Texture("tankStar4.jpg");
 //        background2=new Texture("pauseScreen2.png");
         saveBtn=new Texture("save.png");
         resumeBtn=new Texture("RE.png");
@@ -35,7 +35,7 @@ public class ResumeState extends State{
     @Override
     protected void handleInput() {
         if(Gdx.input.justTouched()){
-            gam.set(new chooseTankStateFP(gam));
+            gam.set(new savedState(gam));
             dispose();
         }
     }
@@ -50,9 +50,10 @@ public class ResumeState extends State{
         b.begin();
         b.draw(background,0,0, GameMain.WIDTH,GameMain.HEIGHT);
 //        b.draw(background2,300,180, GameMain.WIDTH/2,GameMain.HEIGHT/2);
-        b.draw(resumeBtn,GameMain.WIDTH/2-resumeBtn.getWidth()/2,GameMain.HEIGHT/2);
-        b.draw(quitBtn,GameMain.WIDTH/2-quitBtn.getWidth()/2,GameMain.HEIGHT/2-80);
-        b.draw(saveBtn,GameMain.WIDTH/2-saveBtn.getWidth()/2,GameMain.HEIGHT/2-183);
+        b.draw(resumeBtn,GameMain.WIDTH/2-75,GameMain.HEIGHT/2+30,150,120);
+//        b.draw(resumeBtn,GameMain.WIDTH/2-resumeBtn.getWidth()/2,GameMain.HEIGHT/2);
+        b.draw(quitBtn,GameMain.WIDTH/2-150,GameMain.HEIGHT/2-60,300,180);
+        b.draw(saveBtn,GameMain.WIDTH/2-150,GameMain.HEIGHT/2-120,300,180);
         b.end();
     }
 

@@ -14,16 +14,16 @@ public class Menu extends State{
 
     public Menu(GameStateManager gam) {
         super(gam);
-        background=new Texture("tankStar1.png");
+        background=new Texture("tankStar1.jpg");
         playBtn=new Texture("newGameBtn.png");
-        ResumeBtn=new Texture("loadGame.png");
+        ResumeBtn=new Texture("loadGameBtn.png");
         Exit=new Texture("exit.png");
     }
 
     @Override
     public void handleInput() {
         if(Gdx.input.justTouched()){
-            gam.set(new chooseTankStateFP(gam));
+            gam.set(new Menu2(gam));
             dispose();
         }
     }
@@ -37,9 +37,9 @@ public class Menu extends State{
     public void render(SpriteBatch b) {
         b.begin();
         b.draw(background,0,0, GameMain.WIDTH,GameMain.HEIGHT);
-        b.draw(playBtn,GameMain.WIDTH/2-playBtn.getWidth()/2,GameMain.HEIGHT/2);
-        b.draw(ResumeBtn,GameMain.WIDTH/2-ResumeBtn.getWidth()/2,GameMain.HEIGHT/2-80);
-        b.draw(Exit,GameMain.WIDTH/2-ResumeBtn.getWidth()/2,GameMain.HEIGHT/2-183);
+//        b.draw(playBtn,GameMain.WIDTH/2-150,GameMain.HEIGHT/2,300,160);
+//        b.draw(ResumeBtn,GameMain.WIDTH/2-150,GameMain.HEIGHT/2-40,300,160);
+//        b.draw(Exit,GameMain.WIDTH/2-150,GameMain.HEIGHT/2-80,300,160);
         b.end();
     }
 

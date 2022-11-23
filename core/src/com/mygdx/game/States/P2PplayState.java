@@ -46,7 +46,7 @@ public class P2PplayState extends State {
         b.draw(bg,0,0, GameMain.WIDTH,GameMain.HEIGHT);
         b.draw(ground.getGround(),0,-250);
         b.draw(new Texture("vs.png"), 580, 600);
-        b.draw(new Texture("backB.png"), 10, 610);
+        b.draw(new Texture("backBtn.png"), -30, 590,180,100);
         b.draw(health_bar1,250,550);
         b.draw(health_bar2,650,600);
         b.draw(tank.getTank1(),97,290);
