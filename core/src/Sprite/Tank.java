@@ -7,10 +7,10 @@ public class Tank {
     private static final int movement=100;
     private Vector3 position;
     private Vector3 velocity;
-    private Texture tank1;
-    private Texture tank2;
+    public Texture tank1;
+    public Texture tank2;
     public Tank(int x,int y){
-        position=new Vector3(x,y,0);
+        position=new Vector3(0,0,0);
         velocity=new Vector3(0,0,0);
         tank1=new Texture("toxic1.png");
         tank2=new Texture("pumpkin.png");

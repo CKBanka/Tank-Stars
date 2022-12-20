@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import Utils.GameData;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -11,10 +12,13 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.mygdx.game.States.GameStateManager;
 import com.mygdx.game.States.Menu;
 
+import java.util.ArrayList;
+
 public class GameMain extends Game {
 	public static final int WIDTH=1200;
 	public static final int HEIGHT=675;
 	public static final String title="Tank Stars";
+	public static ArrayList<GameData> Games=new ArrayList<>();
 	SpriteBatch batch;
 	Texture img;
 	private Stage stage;

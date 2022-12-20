@@ -1,5 +1,6 @@
 package com.mygdx.game.States;
 
+import Utils.GameData;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -25,6 +26,7 @@ public class ResumeState extends State{
     Rectangle r1;
     Rectangle r3;
     ShapeRenderer sr;
+    GameData curr;
 
     public ResumeState(GameStateManager gam) {
         super(gam);
@@ -48,7 +50,7 @@ public class ResumeState extends State{
 //        }
         if (Gdx.input.isTouched()) {
             if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                gam.set(new P2PplayState(gam));
+                gam.set(new P2PplayState(gam,curr));
                 dispose();
             }
             else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {

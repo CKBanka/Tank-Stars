@@ -2,6 +2,7 @@ package com.mygdx.game.States;
 
 import Sprite.Ground;
 import Sprite.Tank;
+import Utils.GameData;
 import Utils.TiledObjectUtill;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -37,17 +38,19 @@ public class P2PplayState extends State {
     private World world;
     private Box2DDebugRenderer b2dr;
     private  Body tanks;
+    GameData curr;
 
 
-    public P2PplayState(GameStateManager gam) {
+    public P2PplayState(GameStateManager gam, GameData g) {
         super(gam);
+        curr=g;
+        tank=curr.t;
         world=new World(new Vector2(500,500),true);
         b2dr=new Box2DDebugRenderer();
         bg=new Texture("rainScene.jpg");
         health_bar1=new Texture("healthleft.png");
         health_bar2=new Texture("healthright.png");
         ground=new Ground(50,50);
-        tank=new Tank(50,50);
         sr=new ShapeRenderer();
         r1=new Rectangle(40,30,40,40);
         map=new TmxMapLoader().load("GroundNew.tmx");

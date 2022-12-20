@@ -1,5 +1,6 @@
 package com.mygdx.game.States;
 
+import Utils.GameData;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -8,6 +9,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.mygdx.game.GameMain;
 
 import java.awt.*;
+import java.util.ArrayList;
 
 public class Menu2 extends State{
     private Texture background;
@@ -38,7 +40,9 @@ public class Menu2 extends State{
 //        }
         if (Gdx.input.isTouched()) {
             if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                gam.set(new chooseTankStateFP(gam, 1));
+                GameData g=new GameData();
+                GameMain.Games.add(g);
+                gam.set(new chooseTankStateFP(gam, 1,g));
                 dispose();
             }
             else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {

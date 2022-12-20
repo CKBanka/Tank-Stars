@@ -1,5 +1,6 @@
 package com.mygdx.game.States;
 
+import Utils.GameData;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,11 +17,13 @@ public class chooseTankStateSP extends State {
     int now;
     Rectangle r2;
     Rectangle r1;
+    Rectangle r3;
 
+    GameData curr;
 
-
-    public chooseTankStateSP(GameStateManager gam,int st) {
+    public chooseTankStateSP(GameStateManager gam,int st,GameData g) {
         super(gam);
+        curr=g;
         background=new Texture("rainScene.jpg");
         HBtn=new Texture("selectTank1.png");
         if(st==1){
@@ -45,6 +48,7 @@ public class chooseTankStateSP extends State {
         }
         r1=new Rectangle(50,300,90,90);
         r2=new Rectangle(1020,300,90,90);
+        r3=new Rectangle(400,350,200,200);
     }
 
     @Override
@@ -52,55 +56,80 @@ public class chooseTankStateSP extends State {
         if(Gdx.input.justTouched()){
             if(now==1) {
                 if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateFP(gam,5));
+                    gam.set(new chooseTankStateFP(gam,5,curr));
                     dispose();
                 }
                 else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateSP(gam, 2));
+                    gam.set(new chooseTankStateSP(gam, 2,curr));
+                    dispose();
+                }
+                else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    curr.newTank2(1);
+                    gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
 
             }
             else if(now==2){
                 if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateSP(gam,1));
+                    gam.set(new chooseTankStateSP(gam,1,curr));
                     dispose();
                 }
                 else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateSP(gam, 3));
+                    gam.set(new chooseTankStateSP(gam, 3,curr));
+                    dispose();
+                }
+                else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    curr.newTank2(2);
+                    gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
             }
             else if(now==3){
                 if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateSP(gam,2));
+                    gam.set(new chooseTankStateSP(gam,2,curr));
                     dispose();
                 }
                 else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateSP(gam, 4));
+                    gam.set(new chooseTankStateSP(gam, 4,curr));
+                    dispose();
+                }
+                else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    curr.newTank2(3);
+                    gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
             }
             else if(now==4){
                 if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateSP(gam,3));
+                    gam.set(new chooseTankStateSP(gam,3,curr));
                     dispose();
                 }
                 else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateSP(gam, 5));
+                    gam.set(new chooseTankStateSP(gam, 5,curr));
+                    dispose();
+                }
+                else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    curr.newTank2(4);
+                    gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
             }
             else if(now==5){
                 if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new chooseTankStateSP(gam,4));
+                    gam.set(new chooseTankStateSP(gam,4,curr));
                     dispose();
                 }
                 else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                    gam.set(new P2PplayState(gam));
+                    curr.newTank2(1);
+                    gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
-
+                else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    curr.newTank2(5);
+                    gam.set(new P2PplayState(gam,curr));
+                    dispose();
+                }
             }
         }
     }
