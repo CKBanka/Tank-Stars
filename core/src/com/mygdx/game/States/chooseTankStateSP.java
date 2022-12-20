@@ -6,12 +6,18 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.mygdx.game.GameMain;
 
+import java.awt.*;
+
 public class chooseTankStateSP extends State {
     private Texture background;
     private Texture HBtn;
     private Texture t;
     private Texture selB;
     int now;
+    Rectangle r2;
+    Rectangle r1;
+
+
 
     public chooseTankStateSP(GameStateManager gam,int st) {
         super(gam);
@@ -37,31 +43,64 @@ public class chooseTankStateSP extends State {
             t=new Texture("29.jpg");
             now=5;
         }
-        selB=new Texture("select.png");
+        r1=new Rectangle(50,300,90,90);
+        r2=new Rectangle(1020,300,90,90);
     }
 
     @Override
     protected void handleInput() {
         if(Gdx.input.justTouched()){
             if(now==1) {
-                gam.set(new chooseTankStateSP(gam, 2));
-                dispose();
+                if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateFP(gam,5));
+                    dispose();
+                }
+                else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateSP(gam, 2));
+                    dispose();
+                }
+
             }
             else if(now==2){
-                gam.set(new chooseTankStateSP(gam,3));
-                dispose();
+                if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateSP(gam,1));
+                    dispose();
+                }
+                else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateSP(gam, 3));
+                    dispose();
+                }
             }
             else if(now==3){
-                gam.set(new chooseTankStateSP(gam,4));
-                dispose();
+                if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateSP(gam,2));
+                    dispose();
+                }
+                else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateSP(gam, 4));
+                    dispose();
+                }
             }
             else if(now==4){
-                gam.set(new chooseTankStateSP(gam,5));
-                dispose();
+                if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateSP(gam,3));
+                    dispose();
+                }
+                else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateSP(gam, 5));
+                    dispose();
+                }
             }
             else if(now==5){
-                gam.set(new P2PplayState(gam));
-                dispose();
+                if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateSP(gam,4));
+                    dispose();
+                }
+                else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new P2PplayState(gam));
+                    dispose();
+                }
+
             }
         }
     }
@@ -82,6 +121,6 @@ public class chooseTankStateSP extends State {
 
     @Override
     public void dispose() {
-
+        t.dispose();
     }
 }

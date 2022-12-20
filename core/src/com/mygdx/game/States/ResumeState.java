@@ -3,10 +3,13 @@ package com.mygdx.game.States;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mygdx.game.GameMain;
+
+import java.awt.*;
 
 public class ResumeState extends State{
     private Texture background;
@@ -18,6 +21,10 @@ public class ResumeState extends State{
 
     private Skin ms;
     private Stage stage;
+    Rectangle r2;
+    Rectangle r1;
+    Rectangle r3;
+    ShapeRenderer sr;
 
     public ResumeState(GameStateManager gam) {
         super(gam);
@@ -26,17 +33,32 @@ public class ResumeState extends State{
         saveBtn=new Texture("save.png");
         resumeBtn=new Texture("RE.png");
         quitBtn=new Texture("quit.png");
-//        ms=new Skin(Gdx.files.internal("skin/cloud-form-ui.json"));
-//        stage=new Stage();
-//        Label gt=new Label()
+        r1=new Rectangle(520,220,150,40);
+        r2=new Rectangle(520,290,150,40);
+        r3=new Rectangle(520,345,150,40);
+        sr = new ShapeRenderer();
 
     }
 
     @Override
     protected void handleInput() {
-        if(Gdx.input.justTouched()){
-            gam.set(new savedState(gam));
-            dispose();
+//        if(Gdx.input.justTouched()){
+//            gam.set(new savedState(gam));
+//            dispose();
+//        }
+        if (Gdx.input.isTouched()) {
+            if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                gam.set(new P2PplayState(gam));
+                dispose();
+            }
+            else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                gam.set(new Menu2(gam));
+                dispose();
+            }
+            else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                gam.set(new Menu2(gam));
+                dispose();
+            }
         }
     }
 
@@ -55,6 +77,9 @@ public class ResumeState extends State{
         b.draw(quitBtn,GameMain.WIDTH/2-150,GameMain.HEIGHT/2-60,300,180);
         b.draw(saveBtn,GameMain.WIDTH/2-150,GameMain.HEIGHT/2-120,300,180);
         b.end();
+//        sr.begin(ShapeRenderer.ShapeType.Filled);
+//        sr.rect(520,100,150,40);
+//        sr.end();
     }
 
     @Override

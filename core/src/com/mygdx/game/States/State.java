@@ -16,6 +16,9 @@ public abstract class State {
 
     protected abstract void handleInput();
     public abstract void update(float dt);
+    public void resize(int w, int h) {
+        cam.setToOrtho(false, w, h);
+    }
     public abstract void render(SpriteBatch b);
     public abstract void dispose();
 }
