@@ -17,6 +17,7 @@ public class chooseTankStateFP extends State {
     int now;
     Rectangle r1;
     Rectangle r2;
+    Rectangle r3;
     ShapeRenderer sr;
 
     public chooseTankStateFP(GameStateManager gam,int st) {
@@ -46,6 +47,7 @@ public class chooseTankStateFP extends State {
         }
         r1=new Rectangle(50,300,90,90);
         r2=new Rectangle(1020,300,90,90);
+        r3=new Rectangle(400,350,200,200);
     }
 
     @Override
@@ -57,6 +59,10 @@ public class chooseTankStateFP extends State {
                     dispose();
                 }
                 else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                    gam.set(new chooseTankStateFP(gam, 2));
+                    dispose();
+                }
+                else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     gam.set(new chooseTankStateFP(gam, 2));
                     dispose();
                 }
@@ -118,9 +124,9 @@ public class chooseTankStateFP extends State {
 //        b.draw(HBtn,GameMain.WIDTH/2-HBtn.getWidth()/2,580);
         b.draw(t,0,0,1200,680);
         b.end();
-//        sr.begin(ShapeRenderer.ShapeType.Filled);
-//        sr.rect(1020,300,90,90);
-//        sr.end();
+        sr.begin(ShapeRenderer.ShapeType.Filled);
+        sr.rect(400,350,200,200);
+        sr.end();
     }
 
     @Override

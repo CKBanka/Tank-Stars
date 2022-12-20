@@ -12,6 +12,7 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.GameMain;
@@ -35,11 +36,12 @@ public class P2PplayState extends State {
     private OrthographicCamera camera;
     private World world;
     private Box2DDebugRenderer b2dr;
+    private  Body tanks;
 
 
     public P2PplayState(GameStateManager gam) {
         super(gam);
-        world=new World(new Vector2(0,0),false);
+        world=new World(new Vector2(500,500),true);
         b2dr=new Box2DDebugRenderer();
         bg=new Texture("rainScene.jpg");
         health_bar1=new Texture("healthleft.png");
@@ -50,7 +52,7 @@ public class P2PplayState extends State {
         r1=new Rectangle(40,30,40,40);
         map=new TmxMapLoader().load("GroundNew.tmx");
         tmr=new OrthogonalTiledMapRenderer(map);
-//        tmr = new OrthogonalTiledMapRenderer(map,1200/(map.getProperties().get("width",Integer.class)*5f));
+        tmr = new OrthogonalTiledMapRenderer(map,1200/(map.getProperties().get("width",Integer.class)*5f));
         camera=new OrthographicCamera();
         camera.setToOrtho(false,1150,337);
         BodyDef bdef=new BodyDef();
@@ -58,9 +60,7 @@ public class P2PplayState extends State {
         FixtureDef fdef=new FixtureDef();
         TiledObjectUtill.parseTiledObjectLayer(world,map.getLayers().get("ground").getObjects());
 
-        Body body;
-        int width = 800; // Can change to other
-        int height = 480;
+        tanks=createTank();
 //        viewport = new FitViewport(width, height, new OrthographicCamera(width, height));
 //
 //        viewport.getCamera().position.set(768, 0, 0);
@@ -68,8 +68,8 @@ public class P2PplayState extends State {
         mapLoader = new TmxMapLoader() ;
         tmr = new OrthogonalTiledMapRenderer(map) ;
 
-        camera.position.set(580,300,0);
-
+        camera.position.set(575,300,0);
+        tmr.setView(camera);
 
     }
 //    public void resize(int w, int h) {
@@ -78,12 +78,12 @@ public class P2PplayState extends State {
     public Body createTank(){
         Body tbody;
         BodyDef def=new BodyDef();
-        def.type=BodyDef.BodyType.DynamicBody;
-        def.position.set(0,0);
+        def.type=BodyDef.BodyType.StaticBody;
+        def.position.set(200,300);
         def.fixedRotation=true;
         tbody=world.createBody(def);
         PolygonShape shape=new PolygonShape();
-        shape.setAsBox(32,32);
+        shape.setAsBox(30,10);
         tbody.createFixture(shape,1.0f);
         shape.dispose();
         return tbody;
@@ -102,9 +102,7 @@ public class P2PplayState extends State {
                 dispose();
             }
         }
-        camera.update();
-        tmr.setView(camera);
-//        world.step(1/60f,6,2);
+
 
     }
 
@@ -112,13 +110,23 @@ public class P2PplayState extends State {
 
     @Override
     public void update(float dt) {
+        tmr.setView(camera);
+////        handleInput();
+//        cameraUpdate(dt);
+        world.step(1/60f,6,2);
+        camera.update();
         handleInput();
+    }
+    public void cameraUpdate(float dt){
+        Vector3 position =camera.position;
+        position.x=tanks.getPosition().x;
+        position.y=tanks.getPosition().y;
+        camera.position.set(position);
 
     }
-
     @Override
     public void render(SpriteBatch b) {
-        update(Gdx.graphics.getDeltaTime());
+//        update(Gdx.graphics.getDeltaTime());
 //        b.setProjectionMatrix(camera.combined);
         b.begin();
         b.draw(bg,0,0, GameMain.WIDTH,GameMain.HEIGHT);
@@ -127,11 +135,13 @@ public class P2PplayState extends State {
         b.draw(new Texture("backBtn.png"), -30, 590,180,100);
         b.draw(health_bar1,250,550);
         b.draw(health_bar2,650,600);
-        b.draw(tank.getTank1(),97,290);
+        b.draw(tank.getTank1(),tanks.getPosition().x-tank.getTank1().getWidth()/2,tanks.getPosition().y);
+//        b.draw(tank.getTank1(),tanks.getPosition().x,tanks.getPosition().y);
         b.draw(tank.getTank2(),910,247);
         b.end();
         tmr.render();
         b2dr.render(world,camera.combined);
+
 //        sr.begin(ShapeRenderer.ShapeType.Filled);
 //        sr.rect(40,30,40,40);
 //        sr.end();
