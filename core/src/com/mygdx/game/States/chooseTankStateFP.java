@@ -67,6 +67,7 @@ public class chooseTankStateFP extends State {
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank1(1);
+                    curr.t.t1val=1;
                     gam.set(new chooseTankStateSP(gam, 1,curr));
                     dispose();
                 }
@@ -83,6 +84,7 @@ public class chooseTankStateFP extends State {
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank1(2);
+                    curr.t.t1val=2;
                     gam.set(new chooseTankStateSP(gam, 1,curr));
                     dispose();
                 }
@@ -98,6 +100,7 @@ public class chooseTankStateFP extends State {
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank1(3);
+                    curr.t.t1val=3;
                     gam.set(new chooseTankStateSP(gam, 1,curr));
                     dispose();
                 }
@@ -113,6 +116,7 @@ public class chooseTankStateFP extends State {
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank1(4);
+                    curr.t.t1val=4;
                     gam.set(new chooseTankStateSP(gam, 1,curr));
                     dispose();
                 }
@@ -124,11 +128,13 @@ public class chooseTankStateFP extends State {
                 }
                 else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank1(1);
+                    curr.t.t1val=1;
                     gam.set(new chooseTankStateSP(gam,1,curr));
                     dispose();
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank1(5);
+                    curr.t.t1val=5;
                     gam.set(new chooseTankStateSP(gam, 1,curr));
                     dispose();
                 }

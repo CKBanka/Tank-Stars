@@ -6,8 +6,8 @@ import com.mygdx.game.GameMain;
 
 public class GameData {
     public Tank t;
-    int health1;
-    int health2;
+    public int health1;
+    public int health2;
     public GameData(){
         health1=100;
         health2=100;

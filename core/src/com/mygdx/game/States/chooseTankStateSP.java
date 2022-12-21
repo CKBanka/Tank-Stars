@@ -65,6 +65,7 @@ public class chooseTankStateSP extends State {
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank2(1);
+                    curr.t.t2val=1;
                     gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
@@ -81,6 +82,7 @@ public class chooseTankStateSP extends State {
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank2(2);
+                    curr.t.t2val=2;
                     gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
@@ -96,6 +98,7 @@ public class chooseTankStateSP extends State {
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank2(3);
+                    curr.t.t2val=3;
                     gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
@@ -111,6 +114,7 @@ public class chooseTankStateSP extends State {
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank2(4);
+                    curr.t.t2val=4;
                     gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
@@ -122,11 +126,13 @@ public class chooseTankStateSP extends State {
                 }
                 else if (r2.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank2(1);
+                    curr.t.t2val=1;
                     gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }
                 else if (r3.contains(Gdx.input.getX(), Gdx.input.getY())) {
                     curr.newTank2(5);
+                    curr.t.t2val=5;
                     gam.set(new P2PplayState(gam,curr));
                     dispose();
                 }

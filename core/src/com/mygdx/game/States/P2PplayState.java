@@ -101,7 +101,7 @@ public class P2PplayState extends State {
 //        }
         if(Gdx.input.justTouched()){
             if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                gam.set(new ResumeState(gam));
+                gam.set(new ResumeState(gam,curr));
                 dispose();
             }
         }
