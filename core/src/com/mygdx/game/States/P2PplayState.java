@@ -115,27 +115,27 @@ public class P2PplayState extends State {
 
     @Override
     protected void handleInput() {
-//        int hforce = 0;
-//
-//        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
-//            hforce -= 1;
-//        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
-//            hforce += 1;
-////        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
-////            curr.turn = !curr.turn;
-////        }
-//        if (Gdx.input.isTouched()) {
-//            if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-//                gam.set(new ResumeState(gam, curr));
-//                dispose();
-//            }
+        int hforce = 0;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+            hforce -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+            hforce += 1;
+//        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+//            curr.turn = !curr.turn;
 //        }
-//        if (curr.turn) {
-////            tanks1.setLinearVelocity(hforce * 100,Math.abs(hforce)*-70);
-//            tanks1.setLinearVelocity(hforce * 100, Math.abs(tanks1.getLinearVelocity().y) * -1);
-//        } else {
-//            tanks2.setLinearVelocity(hforce * 100, Math.abs(tanks2.getLinearVelocity().y) * -1);
-//        }
+        if (Gdx.input.isTouched()) {
+            if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
+                gam.set(new ResumeState(gam, curr));
+                dispose();
+            }
+        }
+        if (curr.turn) {
+//            tanks1.setLinearVelocity(hforce * 100,Math.abs(hforce)*-70);
+            tanks1.setLinearVelocity(hforce * 100, Math.abs(tanks1.getLinearVelocity().y) * -1);
+        } else {
+            tanks2.setLinearVelocity(hforce * 100, Math.abs(tanks2.getLinearVelocity().y) * -1);
+        }
 ////        tanks1.setLinearVelocity(hforce * 70, 0);
 
 
@@ -146,14 +146,14 @@ public class P2PplayState extends State {
 //            cdx = 600;
 //            cdy = 600;
 //
-//            int t;
+            int t;
+
+            if (curr.turn == true)
+                t = 1;
+            else
+                t = 0;
 //
-//            if (curr.turn == true)
-//                t = 1;
-//            else
-//                t = 0;
-//
-//            curr.turn = !curr.turn;
+            curr.turn = !curr.turn;
 //            if (Gdx.input.isKeyPressed(Input.Keys.F)) {
 //                double t1dx, t1dy;
                 int f=0;
@@ -211,7 +211,9 @@ public class P2PplayState extends State {
         b.draw(health_bar2, 650, 600);
         b.draw(curr.t.getTank1(), tanks1.getPosition().x - curr.t.getTank1().getWidth() / 2, tanks1.getPosition().y-20- curr.t.getTank2().getHeight() / 2);
         b.draw(curr.t.getTank2(),tanks2.getPosition().x , tanks2.getPosition().y-20 - curr.t.getTank2().getHeight() / 2);
-
+        if(b1!=null){
+            b.draw(new Texture("bullet.png"),b1.getPosition().x,b1.getPosition().y);
+        }
         b.end();
         tmr.render();
         b2dr.render(world, gamecam.combined);
