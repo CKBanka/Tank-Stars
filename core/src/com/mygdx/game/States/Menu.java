@@ -19,7 +19,9 @@ public class Menu extends State{
         ResumeBtn=new Texture("loadGameBtn.png");
         Exit=new Texture("exit.png");
     }
-
+    public boolean isRunning(){
+        return true;
+    }
     @Override
     public void handleInput() {
         if(Gdx.input.justTouched()){

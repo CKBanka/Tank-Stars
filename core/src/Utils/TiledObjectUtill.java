@@ -9,21 +9,28 @@ import com.badlogic.gdx.physics.box2d.*;
 
 public class TiledObjectUtill {
     public static void parseTiledObjectLayer(World world, MapObjects objects){
-        for (MapObject object:objects) {
-            Shape shape;
-            if(object instanceof PolygonMapObject){
-                shape=createPolyline((PolylineMapObject) object);
+        try {
+            for (MapObject object : objects) {
+                Shape shape;
+                if (object instanceof PolylineMapObject) {
+                    shape = createPolyline((PolylineMapObject) object);
+                    System.out.println("YEs");
+                } else {
+                    System.out.println("NO");
+                    continue;
+                }
+                Body body;
+                BodyDef bdef = new BodyDef();
+                bdef.type = BodyDef.BodyType.StaticBody;
+                body = world.createBody(bdef);
+                body.createFixture(shape, 1.0f);
+                shape.dispose();
             }
-            else {
-                continue;
-            }
-            Body body;
-            BodyDef bdef=new BodyDef();
-            bdef.type=BodyDef.BodyType.StaticBody;
-            body= world.createBody(bdef);
-            body.createFixture(shape,1.0f);
-            shape.dispose();
         }
+        catch(Exception e){
+            System.out.println(e);
+        }
+
     }
     private static ChainShape createPolyline(PolylineMapObject polyline){
         float[] vertices=polyline.getPolyline().getTransformedVertices();
@@ -33,6 +40,6 @@ public class TiledObjectUtill {
         }
         ChainShape cs= new ChainShape();
         cs.createChain(worldVertices);
-        return null;
+        return cs;
     }
 }

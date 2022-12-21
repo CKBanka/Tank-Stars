@@ -5,6 +5,7 @@ import Sprite.Tank;
 import Utils.GameData;
 import Utils.TiledObjectUtill;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -19,7 +20,6 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.mygdx.game.GameMain;
 
 import java.awt.*;
-import java.util.ArrayList;
 
 public class P2PplayState extends State {
     private Texture t;
@@ -34,120 +34,129 @@ public class P2PplayState extends State {
     private TmxMapLoader mapLoader;
     private FitViewport viewport;
     private TiledMap map;
-    private OrthographicCamera camera;
+    private OrthographicCamera gamecam;
     private World world;
     private Box2DDebugRenderer b2dr;
-    private  Body tanks;
-    GameData curr;
+    private Body tanks1;
+    private Body tanks2;
+    private GameData curr;
 
 
     public P2PplayState(GameStateManager gam, GameData g) {
         super(gam);
         curr=g;
-        tank=curr.t;
-        world=new World(new Vector2(500,500),true);
-        b2dr=new Box2DDebugRenderer();
-        bg=new Texture("rainScene.jpg");
-        health_bar1=new Texture("healthleft.png");
-        health_bar2=new Texture("healthright.png");
-        ground=new Ground(50,50);
-        sr=new ShapeRenderer();
-        r1=new Rectangle(40,30,40,40);
-        map=new TmxMapLoader().load("GroundNew.tmx");
-        tmr=new OrthogonalTiledMapRenderer(map);
-        tmr = new OrthogonalTiledMapRenderer(map,1200/(map.getProperties().get("width",Integer.class)*5f));
-        camera=new OrthographicCamera();
-        camera.setToOrtho(false,1150,337);
-        BodyDef bdef=new BodyDef();
-        PolygonShape shape=new PolygonShape();
-        FixtureDef fdef=new FixtureDef();
-        TiledObjectUtill.parseTiledObjectLayer(world,map.getLayers().get("ground").getObjects());
+        bg = new Texture("rainScene.jpg");
+        health_bar1 = new Texture("healthleft.png");
+        health_bar2 = new Texture("healthright.png");
+        ground = new Ground(50, 50);
+        tank = new Tank(50, 50);
+        sr = new ShapeRenderer();
+        r1 = new Rectangle(40, 30, 40, 40);
+            gamecam = new OrthographicCamera();
+            gamecam.setToOrtho(false, 1150, 337);
 
-        tanks=createTank();
-//        viewport = new FitViewport(width, height, new OrthographicCamera(width, height));
-//
-//        viewport.getCamera().position.set(768, 0, 0);
+            world = new World(new Vector2(0, -9.8f), false);
+            b2dr = new Box2DDebugRenderer();
 
-        mapLoader = new TmxMapLoader() ;
-        tmr = new OrthogonalTiledMapRenderer(map) ;
+            BodyDef bdef = new BodyDef();
+            PolygonShape shape = new PolygonShape();
+            FixtureDef fdef = new FixtureDef();
 
-        camera.position.set(575,300,0);
-        tmr.setView(camera);
+            map = new TmxMapLoader().load("groundNew.tmx");
+            tmr = new OrthogonalTiledMapRenderer(map);
+            TiledObjectUtill.parseTiledObjectLayer(world, map.getLayers().get("ground").getObjects());
+
+
+            tanks1 = createTank(200, 300);
+            tanks2 = createTank(1000, 240);
+
+
+            gamecam.position.set(575, 300, 0);
+            tmr.setView(gamecam);
+
 
     }
-//    public void resize(int w, int h) {
-//        cam.setToOrtho(false, w, h);
-//    }
-    public Body createTank(){
+
+    public Body createTank(int x,int y) {
         Body tbody;
-        BodyDef def=new BodyDef();
-        def.type=BodyDef.BodyType.StaticBody;
-        def.position.set(200,300);
-        def.fixedRotation=true;
-        tbody=world.createBody(def);
-        PolygonShape shape=new PolygonShape();
-        shape.setAsBox(30,10);
-        tbody.createFixture(shape,1.0f);
+        BodyDef def = new BodyDef();
+        def.type = BodyDef.BodyType.DynamicBody;
+        def.position.set(x, y);
+        def.fixedRotation = true;
+
+        tbody = world.createBody(def);
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(30, 10);
+        tbody.createFixture(shape, 1.0f);
+        tbody.applyAngularImpulse(1,true);
         shape.dispose();
+
         return tbody;
     }
+
     @Override
     protected void handleInput() {
-//        if(Gdx.input.justTouched()){
-//            if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-//                gam.set(new ResumeState(gam));
-//                dispose();
-//            }
-//        }
-        if(Gdx.input.justTouched()){
+        int hforce = 0;
+
+        if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
+            hforce -= 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.RIGHT))
+            hforce += 1;
+        if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            curr.turn =!curr.turn;
+        }
+        if (Gdx.input.isTouched()) {
             if (r1.contains(Gdx.input.getX(), Gdx.input.getY())) {
-                gam.set(new ResumeState(gam,curr));
+                gam.set(new ResumeState(gam, curr));
                 dispose();
             }
         }
+        if(curr.turn){
+            tanks1.setLinearVelocity(hforce * 100,Math.abs(hforce)*-70);
+//            tanks1.setLinearVelocity(hforce * 100,/Math.abs(tanks1.getLinearVelocity().y)*-1);
+        }
+        else{
+            tanks2.setLinearVelocity(hforce * 100, Math.abs(tanks2.getLinearVelocity().y)*-1);
+        }
+//        tanks1.setLinearVelocity(hforce * 70, 0);
 
 
     }
-
 
 
     @Override
     public void update(float dt) {
-        tmr.setView(camera);
-////        handleInput();
-//        cameraUpdate(dt);
-        world.step(1/60f,6,2);
-        camera.update();
+        tmr.setView(gamecam);
+
+        world.step(1 / 60f, 6, 2);
+        gamecam.update();
         handleInput();
     }
-    public void cameraUpdate(float dt){
-        Vector3 position =camera.position;
-        position.x=tanks.getPosition().x;
-        position.y=tanks.getPosition().y;
-        camera.position.set(position);
+
+    public void cameraUpdate(float dt) {
+        Vector3 position = gamecam.position;
+        position.x = tanks1.getPosition().x;
+        position.y = tanks1.getPosition().y;
+        gamecam.position.set(position);
 
     }
+
     @Override
     public void render(SpriteBatch b) {
-//        update(Gdx.graphics.getDeltaTime());
-//        b.setProjectionMatrix(camera.combined);
+
         b.begin();
-        b.draw(bg,0,0, GameMain.WIDTH,GameMain.HEIGHT);
+        b.draw(bg, 0, 0, GameMain.WIDTH, GameMain.HEIGHT);
 //        b.draw(ground.getGround(),0,-250);
         b.draw(new Texture("vs.png"), 580, 600);
-        b.draw(new Texture("backBtn.png"), -30, 590,180,100);
-        b.draw(health_bar1,250,550);
-        b.draw(health_bar2,650,600);
-        b.draw(tank.getTank1(),tanks.getPosition().x-tank.getTank1().getWidth()/2,tanks.getPosition().y);
-//        b.draw(tank.getTank1(),tanks.getPosition().x,tanks.getPosition().y);
-        b.draw(tank.getTank2(),910,247);
+        b.draw(new Texture("backBtn.png"), -30, 590, 180, 100);
+        b.draw(health_bar1, 250, 550);
+        b.draw(health_bar2, 650, 600);
+        b.draw(curr.t.getTank1(), tanks1.getPosition().x - curr.t.getTank1().getWidth() / 2, tanks1.getPosition().y+10);
+        b.draw(curr.t.getTank2(),tanks2.getPosition().x , tanks2.getPosition().y-20 - curr.t.getTank2().getHeight() / 2);
         b.end();
         tmr.render();
-        b2dr.render(world,camera.combined);
+        b2dr.render(world, gamecam.combined);
 
-//        sr.begin(ShapeRenderer.ShapeType.Filled);
-//        sr.rect(40,30,40,40);
-//        sr.end();
     }
 
     @Override
@@ -158,6 +167,5 @@ public class P2PplayState extends State {
         b2dr.dispose();
         world.dispose();
         tmr.dispose();
-
     }
 }
