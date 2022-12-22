@@ -6,6 +6,7 @@ import Utils.GameData;
 import Utils.TiledObjectUtill;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
@@ -43,11 +44,20 @@ public class P2PplayState extends State {
     private Body bullet;
     private GameData curr;
     Body b1;
+    Music music;
 
     public P2PplayState(GameStateManager gam, GameData g) {
         super(gam);
         curr=g;
         sr=new ShapeRenderer();
+        music = Gdx.audio.newMusic(Gdx.files.internal("nfs.mp3"));
+
+        // Set the volume and looping behavior of the music
+        music.setVolume(0.5f);
+        music.setLooping(true);
+
+        // Start playing the music
+        music.play();
         bg = new Texture("backG5.jpg");
         health_bar1 = new Texture("healthleft.png");
         health_bar2 = new Texture("healthright.png");
@@ -244,5 +254,7 @@ public class P2PplayState extends State {
         b2dr.dispose();
         world.dispose();
         tmr.dispose();
+        music.dispose();
+
     }
 }
