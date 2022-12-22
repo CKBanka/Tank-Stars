@@ -70,8 +70,10 @@ public class P2PplayState extends State {
             TiledObjectUtill.parseTiledObjectLayer(world, map.getLayers().get("ground").getObjects());
 
 
-            tanks1 = createTank(100, 240);
-            tanks2 = createTank(1000, 240);
+//            tanks1 = createTank(100, 240);
+//            tanks2 = createTank(1000, 240);
+            tanks1 = createTank((int)curr.t.position1.x, (int)curr.t.position1.y);
+            tanks2 = createTank((int)curr.t.position2.x, (int)curr.t.position2.y);
 //            bullet=createBullet(200,320);
 
             gamecam.position.set(575, 300, 0);
@@ -133,12 +135,18 @@ public class P2PplayState extends State {
         if (curr.turn) {
 //            tanks1.setLinearVelocity(hforce * 100,Math.abs(hforce)*-70);
             tanks1.setLinearVelocity(hforce * 100, Math.abs(tanks1.getLinearVelocity().y) * -1);
+
+
         } else {
             tanks2.setLinearVelocity(hforce * 100, Math.abs(tanks2.getLinearVelocity().y) * -1);
+
         }
 ////        tanks1.setLinearVelocity(hforce * 70, 0);
 
-
+        curr.t.position1.x= tanks1.getPosition().x;
+        curr.t.position1.y= tanks1.getPosition().y;
+        curr.t.position2.x= tanks2.getPosition().x;
+        curr.t.position2.y= tanks2.getPosition().y;
         if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
             double cdx, cdy;
 //            cdx = Gdx.input.getX();
@@ -156,11 +164,11 @@ public class P2PplayState extends State {
             curr.turn = !curr.turn;
 //            if (Gdx.input.isKeyPressed(Input.Keys.F)) {
 //                double t1dx, t1dy;
-                int f=0;
-                if(f==0){
-                    b1 = createBullet((int) tanks1.getPosition().x+40, (int) tanks1.getPosition().y);
-                    f=1;
-                }
+            int f=0;
+            if(f==0){
+                b1 = createBullet((int) tanks1.getPosition().x+40, (int) tanks1.getPosition().y);
+                f=1;
+            }
 
 //                if (t == 1) {
 //                    t1dx = tanks1.getPosition().x;
@@ -171,15 +179,16 @@ public class P2PplayState extends State {
 //                }
 //
 //                double theta = (cdx - t1dx) / (cdy - t1dy);
-                //theta = Math.abs(Math.atan(theta));
+            //theta = Math.abs(Math.atan(theta));
 
-                double theta = 0;
-                b1.setLinearVelocity((float) (50000 * Math.cos(theta)), (float) (50000* Math.sin(theta)));
+            double theta = 0;
+            b1.setLinearVelocity((float) (50000 * Math.cos(theta)), (float) (50000* Math.sin(theta)));
 
 
-            }
         }
+    }
 //    }
+
 
 
     @Override

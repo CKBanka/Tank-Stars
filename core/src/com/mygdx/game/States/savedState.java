@@ -77,6 +77,8 @@ public class savedState extends State{
                 d.newTank2(sd.t2);
                 d.health1=sd.h1;
                 d.health2=sd.h2;
+                d.t.position1.x=sd.t1x;
+                d.t.position1.y=sd.t1y;
                 GameMain.num--;
                 GameMain.dt.remove(GameMain.num);
                 gam.set(new P2PplayState(gam,d));

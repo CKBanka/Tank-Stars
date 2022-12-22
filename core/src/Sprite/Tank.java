@@ -12,8 +12,8 @@ public class Tank {
     public int t2val;
     public Texture tank2;
     public Tank(int x,int y){
-        position1=new Vector3(0,0,0);
-        position2=new Vector3(0,0,0);
+        position1=new Vector3(100,240,0);
+        position2=new Vector3(1000,240,0);
         tank1=new Texture("toxic1.png");
         tank2=new Texture("pumpkin.png");
         t1val=1;
