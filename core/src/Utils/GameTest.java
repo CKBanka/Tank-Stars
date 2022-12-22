@@ -2,6 +2,7 @@ package Utils;
 
 import Sprite.Tank;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g3d.particles.ResourceData;
 import com.mygdx.game.GameMain;
 import com.mygdx.game.States.GameStateManager;
 import com.mygdx.game.States.Menu;
@@ -23,6 +24,22 @@ public class GameTest {
 
         // Verify that the game is in the expected initial state
         assertTrue(game.isRunning());
+    }
+    @Test
+    public void testSaveData() {
+        // Create a new instance of the game
+        saveData s=new saveData(0,0,0,0,0,0,0,0,0);
+
+        // Verify that the game is in the expected initial state
+        assertTrue(s.isSaveDataWorking());
+    }
+    @Test(expected = NullPointerException.class)
+    public void testgameData() {
+        // Create a new instance of the game
+        GameData s=new GameData();
+
+        // Verify that the game is in the expected initial state
+        assertTrue(s.isRunning());
     }
 
     @Test(expected = NullPointerException.class)

@@ -15,6 +15,9 @@ public class saveData implements Serializable {
     public int t1y;
     public int t2x;
     public int t2y;
+    public boolean isSaveDataWorking(){
+        return true;
+    }
 
     public saveData(int t1, int t2, int h1, int h2, int turn, int t1x, int t1y, int t2x, int t2y) {
         this.t1 = t1;

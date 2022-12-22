@@ -14,6 +14,9 @@ public class GameData {
         health2=100;
         t=new Tank(0,0);
     }
+    public boolean isRunning(){
+        return true;
+    }
     public void newTank1(int i){
         if(i==1){
             t.tank1=new Texture("pumpkin1.png");
