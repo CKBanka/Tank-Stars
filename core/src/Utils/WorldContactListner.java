@@ -10,14 +10,18 @@ public class WorldContactListner implements ContactListener {
 
     @Override
     public void beginContact(Contact contact) {
-        Fixture fixA=contact.getFixtureA();
-        Fixture fixB=contact.getFixtureB();
-        if((fixA.getUserData()  instanceof P2PplayState) && fixB.getUserData()=="Bullet"){
-            System.out.println("Yups");
-            ((P2PplayState) fixA.getUserData()).dpB();
+        try {
+            Fixture fixA = contact.getFixtureA();
+            Fixture fixB = contact.getFixtureB();
+            if ((fixA.getUserData() instanceof P2PplayState) && fixB.getUserData() == "Bullet") {
+                System.out.println("Yups");
+                ((P2PplayState) fixA.getUserData()).dpB();
+            } else if ((fixB.getUserData() instanceof P2PplayState) && fixA.getUserData() == "Bullet") {
+                System.out.println("Yuos");
+            }
         }
-        else if((fixB.getUserData() instanceof P2PplayState) && fixA.getUserData()=="Bullet"){
-            System.out.println("Yuos");
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
 

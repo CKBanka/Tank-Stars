@@ -305,6 +305,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
@@ -345,6 +346,7 @@ public class P2PplayState extends State {
     Texture img;
     TextureRegion[] animationFrames;
     Animation<TextureRegion> animation;
+    BitmapFont font;
     float elapsedTime;
 
     public P2PplayState(GameStateManager gam, GameData g) {
@@ -361,7 +363,10 @@ public class P2PplayState extends State {
 
         // Start playing the music
 //        music.play();
-
+        font = new BitmapFont();
+        font.getData().setScale(4);
+        font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
+        font.setColor(Color.WHITE);
         img = new Texture("anime.png");
 
         TextureRegion[][] tmpFrames = TextureRegion.split(img,50,28);
@@ -437,12 +442,20 @@ public class P2PplayState extends State {
         return tbody;
     }
     public void dpB(){
-//        if(bullet!=null){
-//            world.destroyBody(tanks1);
-        if(curr.turn)
-            curr.health1-=10;
-        else{
-            curr.health2-=10;
+        try {
+//            if (b1 != null) {
+//                            b1=null;
+////                world.destroyBody(b1);
+//            }
+            if (curr.turn)
+                curr.health1 -= 10;
+            else {
+                curr.health2 -= 10;
+            }
+
+        }
+        catch (Exception e){
+            e.printStackTrace();
         }
     }
     public Body createBullet(float x,float y) {
@@ -468,9 +481,11 @@ public class P2PplayState extends State {
         shape.dispose();
         return tbody;
     }
-
+    int power=1;
+    float angle=(float)Math.PI/4;
     @Override
     protected void handleInput() {
+        try{
         int hforce = 0;
 //        System.out.println(Gdx.input.getX()+" "+Gdx.input.getY());
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT))
@@ -502,20 +517,56 @@ public class P2PplayState extends State {
         curr.t.position1.y= tanks1.getPosition().y*100;
         curr.t.position2.x= tanks2.getPosition().x*100;
         curr.t.position2.y= tanks2.getPosition().y*100;
+
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_1))
+            power=1;
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_2))
+            power=2;
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_3))
+            power=3;
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_4))
+            power=4;
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_5))
+            power=5;
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_6))
+            power=6;
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_7))
+            power=7;
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_8))
+            power=8;
+        if(Gdx.input.isKeyPressed(Input.Keys.NUM_9))
+            power=9;
+        if(Gdx.input.isKeyPressed(Input.Keys.Q))
+            angle=(float) Math.PI/(2*1);
+        if(Gdx.input.isKeyPressed(Input.Keys.W))
+            angle=(float) Math.PI/(2*2);
+        if(Gdx.input.isKeyPressed(Input.Keys.E))
+            angle=(float) Math.PI/(2*3);
+        if(Gdx.input.isKeyPressed(Input.Keys.R))
+            angle=(float) Math.PI/(2*4);
+        if(Gdx.input.isKeyPressed(Input.Keys.T))
+            angle=(float) Math.PI/(2*5);
+        if(Gdx.input.isKeyPressed(Input.Keys.Y))
+            angle=(float) Math.PI/(2*6);
+        if(Gdx.input.isKeyPressed(Input.Keys.U))
+            angle=(float) Math.PI/(2*7);
+        if(Gdx.input.isKeyPressed(Input.Keys.I))
+            angle=(float) Math.PI/(2*8);
+        if(Gdx.input.isKeyPressed(Input.Keys.O))
+            angle=(float) Math.PI/(2*9);
         if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
 
 
-          if(curr.turn){
-              b1 = createBullet(tanks1.getPosition().x*100+65,  tanks1.getPosition().y*100+40);
-              double theta = Math.PI/4.0f;
-              b1.setLinearVelocity((float) (6 * Math.cos(theta)), (float) (6* Math.sin(theta)));
-          }
-          else{
-              b1 = createBullet(tanks2.getPosition().x*100-65,  tanks2.getPosition().y*100+40);
-              double theta = Math.PI/4.0f;
-              b1.setLinearVelocity((float) (-6 * Math.cos(theta)), (float) (6* Math.sin(theta)));
-          }
-          curr.turn = !curr.turn;
+            if (curr.turn) {
+                b1 = createBullet(tanks1.getPosition().x * 100 + 65, tanks1.getPosition().y * 100 + 40);
+                double theta = Math.PI / 4.0f;
+                b1.setLinearVelocity((float) (power * Math.cos(theta)), (float) (power * Math.sin(theta)));
+            } else {
+                b1 = createBullet(tanks2.getPosition().x * 100 - 65, tanks2.getPosition().y * 100 + 40);
+//                double theta = Math.PI / 4.0f;
+                b1.setLinearVelocity((float) (-1*power * Math.cos(angle)), (float) (1*power * Math.sin(angle)));
+            }
+            curr.turn = !curr.turn;
 //            if (Gdx.input.isKeyPressed(Input.Keys.F)) {
 //                double t1dx, t1dy;
 
@@ -530,7 +581,9 @@ public class P2PplayState extends State {
 //
 //                double theta = (cdx - t1dx) / (cdy - t1dy);
             //theta = Math.abs(Math.atan(theta));
-
+        }}
+        catch(Exception e){
+            e.printStackTrace();
 
 
 
@@ -563,7 +616,14 @@ public class P2PplayState extends State {
 //        b.setProjectionMatrix(cam.combined);
         b.begin();
         b.draw(bg, 0, 0, GameMain.WIDTH, GameMain.HEIGHT);
-
+        if(curr.health1<=0){
+            font.draw(b,"GAME OVER",400,400);
+            font.draw(b,"Player 2 wins",400,320);
+        }
+        else if(curr.health2<=0){
+            font.draw(b,"GAME OVER",400,400);
+            font.draw(b,"Player 1 wins",400,320);
+        }
 //        b.draw(ground.getGround(),0,-250);
         b.draw(new Texture("vs.png"), 580, 600);
         b.draw(new Texture("backBtn.png"), -30, 590, 180, 100);
@@ -573,9 +633,13 @@ public class P2PplayState extends State {
 ////        b.draw(curr.t.getTank2(),tanks2.getPosition().x , tanks2.getPosition().y-20 - curr.t.getTank2().getHeight() / 2);
         b.draw(curr.t.getTank1(), (tanks1.getPosition().x*100 - curr.t.getTank1().getWidth() / 2.0f), (tanks1.getPosition().y*195-245- curr.t.getTank2().getHeight()/2.0f));
         b.draw(curr.t.getTank2(),tanks2.getPosition().x*100 , (tanks2.getPosition().y*195-245- curr.t.getTank2().getHeight()/2.0f));
+        try{
         if(b1!=null){
-            b.draw(new Texture("bullet.png"),b1.getPosition().x,b1.getPosition().y);
+            b.draw(new Texture("bullet.png"),b1.getPosition().x*100,b1.getPosition().y*100);
             elapsedTime=0;
+        }}
+        catch (Exception e){
+            e.printStackTrace();
         }
 //        if(elapsedTime<=r && b1!=null){
 //            b.draw(animation.getKeyFrame(elapsedTime,false),40,200);
