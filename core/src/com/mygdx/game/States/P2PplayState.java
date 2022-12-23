@@ -362,7 +362,7 @@ public class P2PplayState extends State {
 
 
         // Start playing the music
-//        music.play();
+        music.play();
         font = new BitmapFont();
         font.getData().setScale(4);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -443,10 +443,10 @@ public class P2PplayState extends State {
     }
     public void dpB(){
         try {
-//            if (b1 != null) {
+            if (b1 != null) {
 //                            b1=null;
-////                world.destroyBody(b1);
-//            }
+//                world.destroyBody(b1);
+            }
             if (curr.turn)
                 curr.health1 -= 10;
             else {
