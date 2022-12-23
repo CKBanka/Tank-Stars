@@ -60,7 +60,11 @@ public class savedState extends State{
                 saveData sd=SaveGame.deserialize(1,false);
                 GameData d=new GameData();
                 d.newTank1(sd.t1);
-                System.out.println(sd.t1);
+                d.t.position1.x= sd.t1x;
+                d.t.position1.y= sd.t1y;
+                d.t.position2.x= sd.t2x;
+                d.t.position2.y= sd.t2y;
+//                System.out.println(sd.t1);
                 d.newTank2(sd.t2);
                 d.health1=sd.h1;
                 d.health2=sd.h2;

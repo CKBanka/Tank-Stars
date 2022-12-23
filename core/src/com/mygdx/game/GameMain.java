@@ -24,9 +24,10 @@ public class GameMain extends Game {
 	public static int num=0;
 	public static ArrayList<String> dt=new ArrayList<>();
 	GameData curr;
-	SpriteBatch batch;
+	public static SpriteBatch batch;
 	Texture img;
 	private Stage stage;
+	public static final float PPM=100.0f;
 	private GameStateManager gsm;
 	
 	@Override

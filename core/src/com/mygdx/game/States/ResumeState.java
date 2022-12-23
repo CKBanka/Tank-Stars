@@ -55,6 +55,7 @@ public class ResumeState extends State{
     }
     public  saveData getInstance(){
         saveData s=new saveData(curr.t.t1val,curr.t.t2val,curr.health1,curr.health2,1,(int)(curr.t.position1.x),(int)(curr.t.position1.y),(int)(curr.t.position2.x),(int)(curr.t.position2.y));
+        System.out.println(curr.t.position1.x);
         return s;
     }
     @Override

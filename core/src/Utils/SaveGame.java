@@ -60,6 +60,7 @@ public class SaveGame {
             FileInputStream file = new FileInputStream("game"+idx+".txt");
             ObjectInputStream in = new ObjectInputStream(file);
             saveData temp = (saveData) in.readObject();
+//            System.out.println(temp.t1x);
             in.close();
             file.close();
             if(del) {

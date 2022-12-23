@@ -6,6 +6,7 @@ import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
+import com.mygdx.game.GameMain;
 
 public class TiledObjectUtill {
     public static void parseTiledObjectLayer(World world, MapObjects objects){
@@ -36,7 +37,7 @@ public class TiledObjectUtill {
         float[] vertices=polyline.getPolyline().getTransformedVertices();
         Vector2[] worldVertices=new Vector2[vertices.length/2];
         for (int i = 0; i <worldVertices.length ; i++) {
-            worldVertices[i]=new Vector2(vertices[i*2],vertices[i*2+1]);
+            worldVertices[i]=new Vector2(vertices[i*2]/ GameMain.PPM,vertices[i*2+1]/GameMain.PPM);
         }
         ChainShape cs= new ChainShape();
         cs.createChain(worldVertices);
