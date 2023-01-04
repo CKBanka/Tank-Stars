@@ -659,7 +659,10 @@ public class P2PplayState extends State {
 
     @Override
     public void dispose() {
-
+        sr.dispose();
+        font.dispose();
+        curr.t.tank1.dispose();
+        curr.t.tank2.dispose();
         health_bar1.dispose();
         health_bar2.dispose();
         b2dr.dispose();

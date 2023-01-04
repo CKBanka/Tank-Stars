@@ -144,6 +144,7 @@ public class savedState extends State{
         font.dispose();
         sr.dispose();
         background.dispose();
+        gameImg.dispose();
 
     }
 }
